@@ -1,0 +1,22 @@
+:root {
+	--primary-color : yellow
+	--secondary-color:white
+	--background-color:black
+}
+body {
+  font-family: sans-serif;
+}
+*{
+	max-width: 80%;
+	margin:0 auto;
+}
+#pfp{
+	border-radius:50%;
+	box-shadow:10px 10px dimgray;
+}
+li{
+	display: inline-block;
+}
+a{
+	
+}

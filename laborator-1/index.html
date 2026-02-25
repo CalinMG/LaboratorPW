@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width" initial scale=1.0>
+	<link rel="stylesheet" href="css\style.css">
+</head>
+<body>
+	<script src="js\contact_form.js"> 
+		alert("Hello World!")	; 
+	</script>
+	<header>
+	<h1>Macaneata Calin</h1>
+	<p>Facultatea de Inginierie Electrica si Stiinta Calculatoarelor</p>
+	</header>
+	<nav>
+		<a href="/1">unu</a>|
+		<a href="/2">doi</a>|
+	</nav>
+	<main>
+		<section>
+			<h1>About:</h1>
+			<img id="pfp" src="images\imagemozzie.png" alt="asa arat eu" loading="lazy">
+			<p>sunt student blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla 
+			</p>
+		</section>
+		<section>
+			<h1>Education:</h1>
+			<ol>
+				<li>scoala</li>
+				<li>liceu</li>
+				<li>facultate</li>
+			</ol>
+		</section>
+	</main>
+	<aside>
+		Citat favorit:
+		"blabla"
+	</aside>
+	<footer>
+		Copyright 2026 &copy; 
+		Contact 0748000000
+		<form>
+			<input type="text" id="name"  name="name" autocomplete="name">
+			<label for="name"></label>
+			<input type="email" id="email"  name="email" autocomplete="email" required>
+			<label for="email"></label>
+			<textarea required id="text"  name="text" minlength="100"></textarea>
+			<label for="text"></label>
+		</form>
+		<button type="submit" onclick="submitForm()">CONTACT</button>
+	</footer>
+</body>
+</html>
