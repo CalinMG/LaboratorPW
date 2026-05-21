@@ -1,13 +1,18 @@
 const express = require('express'); 
 const app = express(); 
+const Project = require('./models/Project'); 
 const PORT = 3000; 
+const mongoose = require('mongoose');
 app.use(express.json());
-// Prima ruta: raspunde la GET / 
-app.get('/', function(req, res) { 
-res.json({ message: 'Serverul functioneaza!' }); 
-}); 
-// POST /api/projects - adauga un proiect nou 
-app.post('/api/projects', function(req, res) { 
+mongoose.connect('mongodb://localhost:27017/dashboard')
+.then(function() {
+    console.log('Conectat la MongoDB!');
+})
+.catch(function(err) {
+    console.error('Eroare conectare MongoDB:', err);
+});
+
+app.use(express.jcts, function(req, res) { 
     const newProject = { 
         id: projects.length + 1, 
         title: req.body.title, 
@@ -19,12 +24,6 @@ app.post('/api/projects', function(req, res) {
 }); 
 // Porneste serverul 
 // Date (temporar in memorie, vom folosi MongoDB mai tarziu) 
-const projects = [ 
-    { id: 1, title: "Pagina Personala", tech: "HTML, CSS", done: true }, 
-    { id: 2, title: "Calculator Buget", tech: "JS", done: true }, 
-    { id: 3, title: "Dashboard React", tech: "React", done: false }, 
-    { id: 4, title: "API Meteo", tech: "React, API", done: false }, 
-]; 
 const id = [ 
     { id: 1, title: "Pagina Personala"}, 
     { id: 2, title: "Calculator Buget"}, 
@@ -36,33 +35,88 @@ const stats = [
 ]; 
 
 // GET /api/projects - returneaza toate proiectele 
-app.get('/api/projects', function(req, res) { 
-    res.json(projects); 
+app.get('/api/projects', async function(req, res) {
+    try {
+        const projects = await Project.find();
+        res.json(projects);
+    } catch (err) {
+        res.status(500).json({ error: 'Eroare ' + err });
+    }
+});
+app.post('/api/projects', async function(req, res) { 
+    try { 
+        const newProject = new Project({ 
+            title: req.body.title, 
+            tech: req.body.tech, 
+            done: req.body.done || false, 
+        }); 
+        const saved = await newProject.save(); 
+        res.status(201).json(saved); 
+    } catch (err) { 
+        res.status(400).json({ error: err.message }); 
+    } 
 }); 
-app.get('/api/stats', function(req, res) {
 
-    const total = projects.length;
+// app.get('/api/stats', function(req, res) {
 
-    const completed = projects.filter(
-        p => p.done === true
-    ).length;
+//     const total = projects.length;
 
-    const inProgress = projects.filter(
-        p => p.done === false
-    ).length;
+//     const completed = projects.filter(
+//         p => p.done === true
+//     ).length;
 
-    res.json({
-        totalProjects: total,
-        completedProjects: completed,
-        WIP: inProgress
-    });
+//     const inProgress = projects.filter(
+//         p => p.done === false
+//     ).length;
+
+//     res.json({
+//         totalProjects: total,
+//         completedProjects: completed,
+//         WIP: inProgress
+//     });
+// });
+
+// app.get('/api/projects/:id', function(req, res) {
+//     const project = projects.find(
+//         p => p.id === parseInt(req.params.id)
+//     );
+//     res.json(project);
+// });
+app.get('/api/projects/:id', async function(req, res) {
+    try {
+        const project = await Project.findById(req.params.id);
+        if (!project) {
+            return res.status(404).json({
+                error: 'Project not found'
+            });
+        }
+        res.json(project);
+    } catch (err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
 });
 
-app.get('/api/projects/:id', function(req, res) {
-    const project = projects.find(
-        p => p.id === parseInt(req.params.id)
-    );
-    res.json(project);
+app.delete('/api/projects/:id', async function(req, res) {
+    try {
+        const deletedProject = await Project.findByIdAndDelete(req.params.id);
+
+        if (!deletedProject) {
+            return res.status(404).json({
+                error: 'Project not found'
+            });
+        }
+
+        res.json({
+            message: 'Deleted'
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
 });
 app.listen(PORT, function() { 
 console.log('Server pornit pe http://localhost:' + PORT); 
