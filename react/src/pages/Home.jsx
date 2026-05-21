@@ -8,7 +8,7 @@ function Home() {
     inProgress: 0
 });
     useEffect(function () {
-    fetch('https://laboratorpw.onrender.com/stats')
+    fetch('https://laboratorpw.onrender.com/api/stats')
         .then(res => res.json())
         .then(data => setStats(data))
         .catch(err => console.error(err));
