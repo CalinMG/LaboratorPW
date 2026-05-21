@@ -50,7 +50,7 @@ app.put('/api/projects/:id', async function(req, res) {
         const updated = await Project.findByIdAndUpdate(
             req.params.id,
             req.body,
-            { new: true }
+            { returnDocument: 'after' }
         );
 
         if (!updated) {

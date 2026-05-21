@@ -6,7 +6,10 @@ function ProjectList() {
     const [error, setError] = useState(null);
     const [search, setSearch] = useState('');
     const [title, setTitle] = useState('');
-const [tech, setTech] = useState('');
+    const [tech, setTech] = useState('');
+    const [editingId, setEditingId] = useState(null);
+    const [editTitle, setEditTitle] = useState('');
+    const [editTech, setEditTech] = useState('');
     useEffect(function() { 
         // DUPA (API Express): 
         fetch('http://localhost:3000/api/projects') 
@@ -81,6 +84,48 @@ const [tech, setTech] = useState('');
                                         console.error('Eroare toggle:', err);
                                     }
                                 }
+                                function handleEditStart(project) {
+                                setEditingId(project._id);
+                                setEditTitle(project.title);
+                                setEditTech(project.tech);
+                            }
+                            async function handleSaveEdit() {
+                                try {
+                                    const response = await fetch(
+                                        `http://localhost:3000/api/projects/${editingId}`,
+                                        {
+                                            method: 'PUT',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                title: editTitle,
+                                                tech: editTech,
+                                            }),
+                                        }
+                                    );
+
+                                    const updatedProject = await response.json();
+
+                                    setProjects(prev =>
+                                        prev.map(p =>
+                                            p._id === editingId ? updatedProject : p
+                                        )
+                                    );
+
+                                    setEditingId(null);
+                                    setEditTitle('');
+                                    setEditTech('');
+
+                                } catch (err) {
+                                    console.error('Eroare edit:', err);
+                                }
+                            }
+                            function handleCancelEdit() {
+                                setEditingId(null);
+                                setEditTitle('');
+                                setEditTech('');
+                            }
     return ( 
         <div> 
             <h3>Proiecte</h3> 
@@ -97,9 +142,36 @@ const [tech, setTech] = useState('');
                     return p.title.toLowerCase().includes(search.toLowerCase());
                 })
                 .map((item, index) => (
-                <Card key={item._id} title={item.title} description={item.description} done={item.done} onToggle={
-                    () => handleToggle(item._id, item.done)} />
+                <Card
+    key={item._id}
+    title={item.title}
+    description={item.tech}
+    done={item.done}
+    onEdit={() => handleEditStart(item)}
+    onToggle={() => handleToggle(item._id, item.done)}
+/>
             ))}
+                         <h3>Editează proiect</h3>
+
+                            <input
+                                type="text"
+                                value={editTitle}
+                                onChange={(e) => setEditTitle(e.target.value)}
+                            />
+
+                            <input
+                                type="text"
+                                value={editTech}
+                                onChange={(e) => setEditTech(e.target.value)}
+                            />
+
+                            <button onClick={handleSaveEdit}>
+                                Salvează
+                            </button>
+
+                            <button onClick={handleCancelEdit}>
+                                Anulează
+                            </button>
                         <form onSubmit={handleSubmit}>
                             <br></br><br></br><br></br><br></br><br></br><br></br>
                         <h2>Adaugă proiect</h2>
@@ -114,8 +186,6 @@ const [tech, setTech] = useState('');
                             placeholder="yeahhh"
                             value={tech}
                             onChange={(e) => setTech(e.target.value)}
-
-
                         />
 
                         <button type="submit">Adaugă proiect</button>

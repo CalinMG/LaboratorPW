@@ -11,6 +11,9 @@ function Card(props) {
             <button onClick={props.onToggle}>
                 schimba status!!
             </button>
+            <button onClick={props.onEdit}>
+                editeaza!!
+            </button>
         </div>
     );
 }
