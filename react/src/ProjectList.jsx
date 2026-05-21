@@ -33,21 +33,22 @@ function ProjectList() {
     if (error) {
     return <p>{error}</p>;
     }
-                                async function handleSubmit() { 
-                            try { 
-                            const response = await fetch('https://laboratorpw.onrender.com/api/projects', { 
-                            method: 'POST', 
-                            headers: { 'Content-Type': 'application/json' }, 
-                            body: JSON.stringify({ title: title, tech: tech }), 
-                            }); 
-                            const newProject = await response.json(); 
-                            setProjects([...projects, newProject]); 
-                            setTitle('');  // Goleste input-urile 
-                            setTech(''); 
-                            } catch (err) { 
-                            console.error('Eroare:', err); 
-                            } 
-                            } 
+                            async function handleSubmit(e) {
+                                e.preventDefault();  // add this
+                                try {
+                                    const response = await fetch('https://laboratorpw.onrender.com/api/projects', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ title: title, tech: tech }),
+                                    });
+                                    const newProject = await response.json();
+                                    setProjects([...projects, newProject]);
+                                    setTitle('');
+                                    setTech('');
+                                } catch (err) {
+                                    console.error('Eroare:', err);
+                                }
+                            }
                                 async function handleDelete(id) {
                                 try {
                                     await fetch(`https://laboratorpw.onrender.com/api/projects/${id}`, {
