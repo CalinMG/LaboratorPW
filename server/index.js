@@ -43,6 +43,9 @@ const stats = [
 ]; 
 
 // GET /api/projects - returneaza toate proiectele 
+app.get('/', function(req, res) {
+    res.json({ message: 'API is running!' });
+});
 app.get('/api/projects', async function(req, res) {
     try {
         const projects = await Project.find();
