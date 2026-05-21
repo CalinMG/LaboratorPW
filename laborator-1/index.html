@@ -5,9 +5,7 @@
 	<link rel="stylesheet" href="css\style.css">
 </head>
 <body>
-	<script src="js\contact_form.js"> 
-		alert("Hello World!")	; 
-	</script>
+
 	<header>
 	<h1>Macaneata Calin</h1>
 	<p>Facultatea de Inginierie Electrica si Stiinta Calculatoarelor</p>
@@ -15,26 +13,39 @@
 	<nav>
 		<a href="/1">unu</a>|
 		<a href="/2">doi</a>|
+		<button onclick="darkmode()" id="butonDark">modul INTUNECAT</button>
+		<script>
+			function darkmode(){
+   			document.body.classList.toggle("dark-mode");
+   			if (element.classList.contains('active')) {
+  			document.getElementById('butonDark').textContent="modul LUMINAT";
+			} else {
+  			document.getElementById('butonDark').textContent="modul INTUNECAT";
+			}
+   		}
+		</script>
 	</nav>
 	<main>
 		<section>
 			<h1>About:</h1>
 			<img id="pfp" src="images\imagemozzie.png" alt="asa arat eu" loading="lazy">
-			<p>sunt student blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla 
+
+			<p id="java">sunt student blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla blablablablla 
 			</p>
 		</section>
 		<section>
 			<h1>Education:</h1>
-			<ol>
-				<li>scoala</li>
-				<li>liceu</li>
-				<li>facultate</li>
+			<ol id="ole">
+				<li id="li1">scoala 2012-2016</li><br>
+				<li id="li2">liceu 2016-2020</li><br>
+				<li id="li3">facultate 2024-2026</li><br>
 			</ol>
 		</section>
 	</main>
 	<aside>
 		Citat favorit:
-		"blabla"
+		"blablab"
+		<p id="form-feedback"></p>
 	</aside>
 	<footer>
 		Copyright 2026 &copy; 
@@ -42,12 +53,21 @@
 		<form>
 			<input type="text" id="name"  name="name" autocomplete="name">
 			<label for="name"></label>
-			<input type="email" id="email"  name="email" autocomplete="email" required>
+			<input type="text" id="email"  name="email" autocomplete="email" required>
 			<label for="email"></label>
-			<textarea required id="text"  name="text" minlength="100"></textarea>
+			<textarea required id="text"  name="text"></textarea>
 			<label for="text"></label>
+			<button type="submit" onclick="submitForm()">CONTACT</button>
 		</form>
-		<button type="submit" onclick="submitForm()">CONTACT</button>
+		
+		 
 	</footer>
+		<script> 
+		alert("Hello World!"); 
+	</script>
+<script src=js/contact_form.js>
+</script>
+<script>MesajTimp();</script>
+<script src=js/array.js></script>
 </body>
 </html>
