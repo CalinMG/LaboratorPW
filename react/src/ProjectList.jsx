@@ -12,7 +12,7 @@ function ProjectList() {
     const [editTech, setEditTech] = useState('');
     useEffect(function() { 
         // DUPA (API Express): 
-        fetch('http://localhost:3000/api/projects') 
+        fetch('https://laboratorpw.onrender.com/projects') 
             .then(function(response) { 
                 return response.json(); 
             }) 
@@ -35,7 +35,7 @@ function ProjectList() {
     }
                                 async function handleSubmit() { 
                             try { 
-                            const response = await fetch('http://localhost:3000/api/projects', { 
+                            const response = await fetch('https://laboratorpw.onrender.com/projects', { 
                             method: 'POST', 
                             headers: { 'Content-Type': 'application/json' }, 
                             body: JSON.stringify({ title: title, tech: tech }), 
@@ -50,7 +50,7 @@ function ProjectList() {
                             } 
                                 async function handleDelete(id) {
                                 try {
-                                    await fetch(`http://localhost:3000/api/projects/${id}`, {
+                                    await fetch(`https://laboratorpw.onrender.com/projects/${id}`, {
                                         method: 'DELETE',
                                     });
 
@@ -63,7 +63,7 @@ function ProjectList() {
                             }
                                     async function handleToggle(id, currentDone) {
                                     try {
-                                        const response = await fetch(`http://localhost:3000/api/projects/${id}`, {
+                                        const response = await fetch(`https://laboratorpw.onrender.com/projects/${id}`, {
                                             method: 'PUT',
                                             headers: {
                                                 'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ function ProjectList() {
                             async function handleSaveEdit() {
                                 try {
                                     const response = await fetch(
-                                        `http://localhost:3000/api/projects/${editingId}`,
+                                        `https://laboratorpw.onrender.com/projects/${editingId}`,
                                         {
                                             method: 'PUT',
                                             headers: {
@@ -129,7 +129,7 @@ function ProjectList() {
                             async function handleDelete(id) {
                             if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
                                 try {
-                                    await fetch(`http://localhost:3000/api/projects/${id}`, {
+                                    await fetch(`https://laboratorpw.onrender.com/projects/${id}`, {
                                         method: 'DELETE',
                                     });
 
