@@ -58,6 +58,29 @@ const [tech, setTech] = useState('');
                                     console.error('Eroare la ștergere:', err);
                                 }
                             }
+                                    async function handleToggle(id, currentDone) {
+                                    try {
+                                        const response = await fetch(`http://localhost:3000/api/projects/${id}`, {
+                                            method: 'PUT',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                done: !currentDone,
+                                            }),
+                                        });
+
+                                        const updatedProject = await response.json();
+
+                                        setProjects(function (prev) {
+                                            return prev.map(function (p) {
+                                                return p._id === id ? updatedProject : p;
+                                            });
+                                        });
+                                    } catch (err) {
+                                        console.error('Eroare toggle:', err);
+                                    }
+                                }
     return ( 
         <div> 
             <h3>Proiecte</h3> 
@@ -74,10 +97,12 @@ const [tech, setTech] = useState('');
                     return p.title.toLowerCase().includes(search.toLowerCase());
                 })
                 .map((item, index) => (
-                <Card key={item._id} title={item.title} description={item.description} onDelete={() => handleDelete(item._id)} />
+                <Card key={item._id} title={item.title} description={item.description} done={item.done} onToggle={
+                    () => handleToggle(item._id, item.done)} />
             ))}
                         <form onSubmit={handleSubmit}>
-                        <h3>Adaugă proiect</h3>
+                            <br></br><br></br><br></br><br></br><br></br><br></br>
+                        <h2>Adaugă proiect</h2>
                         <input
                             type="text"
                             placeholder="Titlu proiect"

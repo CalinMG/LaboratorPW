@@ -4,8 +4,12 @@ function Card(props) {
             <h3>{props.title}</h3>
             <p>{props.description}</p>
 
-            <button onClick={props.onDelete}>
-                sterge
+            <p>
+                Status: {props.done ? 'finalizat' : 'in lucru'}
+            </p>
+
+            <button onClick={props.onToggle}>
+                schimba status!!
             </button>
         </div>
     );
