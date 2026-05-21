@@ -1,18 +1,24 @@
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
+require('dotenv').config();
 const express = require('express'); 
 const app = express(); 
 const cors = require('cors'); 
 app.use(cors()); 
 const Project = require('./models/Project'); 
-const PORT = 3000; 
+const PORT = process.env.PORT || 3000; 
 const mongoose = require('mongoose');
 app.use(express.json());
-mongoose.connect('mongodb://localhost:27017/dashboard')
+mongoose.connect(process.env.MONGO_URI)
 .then(function() {
     console.log('Conectat la MongoDB!');
 })
 .catch(function(err) {
     console.error('Eroare conectare MongoDB:', err);
 });
+
 
 app.use(express.jcts, function(req, res) { 
     const newProject = { 
