@@ -14,6 +14,9 @@ function Card(props) {
             <button onClick={props.onEdit}>
                 editeaza!!
             </button>
+             <button onClick={props.onDelete}>
+                sterge!!!
+            </button>
         </div>
     );
 }

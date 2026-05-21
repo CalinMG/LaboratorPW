@@ -126,6 +126,22 @@ function ProjectList() {
                                 setEditTitle('');
                                 setEditTech('');
                             }
+                            async function handleDelete(id) {
+                            if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
+                                try {
+                                    await fetch(`http://localhost:3000/api/projects/${id}`, {
+                                        method: 'DELETE',
+                                    });
+
+                                    setProjects(function (prev) {
+                                        return prev.filter(p => p._id !== id);
+                                    });
+
+                                } catch (err) {
+                                    console.error('Eroare la ștergere:', err);
+                                }
+                            }
+                        }
     return ( 
         <div> 
             <h3>Proiecte</h3> 
@@ -149,6 +165,7 @@ function ProjectList() {
     done={item.done}
     onEdit={() => handleEditStart(item)}
     onToggle={() => handleToggle(item._id, item.done)}
+    onDelete={() => handleDelete(item._id)}
 />
             ))}
                          <h3>Editează proiect</h3>
