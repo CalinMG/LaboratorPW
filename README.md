@@ -8,6 +8,8 @@ Express
 MongoDB
 
 Instructiuni:
+
+LOCAL:
 1. Clone repo
 2. Downloadeaza: Node.js, MongoDB
 3. In PW\react:
@@ -20,3 +22,6 @@ node server.js
 npm run dev
 :D
 
+REMOTE:
+backend: https://laboratorpw.onrender.com
+frontend: https://laborator-pw-wcg5.vercel.app/
