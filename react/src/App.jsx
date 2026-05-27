@@ -11,6 +11,7 @@ import TodoList from './TodoList';
 import ContactForm from './ContactForm';
 import ProjectList from './ProjectList';
 import Navbar from './Navbar';
+import './App.css'
 function App() {
 
     return ( 
